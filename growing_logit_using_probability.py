@@ -15,8 +15,11 @@ for x in x_values:
     plt.plot(p, l, label=f'logit increase x={x}')
 
 # Add the derivative curve: instantaneous rate of change of p w.r.t logit
-derivative = p * (1 - p)
-plt.plot(p, derivative, '--', color='black', label='Derivative (p(1-p))')
+derivative = 1 / (p * (1 - p))  # dz/dp
+# Clip derivative for plotting to avoid huge spikes near 0 and 1
+derivative = np.clip(derivative, 0, 20)
+
+plt.plot(p, derivative, '--', color='black', label='Derivative 1/(p(1-p))')
 
 plt.xlabel('Original probability p')
 plt.ylabel('Increase in probability l')
